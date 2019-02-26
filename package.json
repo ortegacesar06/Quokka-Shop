@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "nodemon ./server/bin/www",
+    "start": "node ./server/bin/www",
     "start:all": "npm run build:ssr && npm run serve:ssr",
     "build": "ng build",
     "test": "ng test",
