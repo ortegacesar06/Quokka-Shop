@@ -1,0 +1,201 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <button type="button" class="btn btn-primary mb-4" (click)="openModal(product_modal)">
+        Añadir Producto
+      </button>
+      <button type="button" class="btn btn-primary mb-4 ml-2" (click)="openModalStock(product_modal_stock)">
+        Añadir Existencias
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngFor = " let product of productService.products" class="col-4">
+      <div class="q-card">
+        <span class="code block">#{{ product.code }}</span>
+        <span class="name block">{{ product.name }}</span>
+        <span class="description block">{{ product.description | slice: 0:75 }}...</span>  
+        <span class="price">${{ product.price }}</span>
+        <button class="btn btn-secondary" (click)="editProduct(product, product_modal)"><i class="fas fa-pencil-alt"></i>Editar</button>   
+      </div>
+    </div>
+    <div *ngIf="isEmpty" class="col-12 text-center">
+      <p class="empty-msg">Lista vacía. Los productos aparecerán aquí una vez creados...</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #product_modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ modal_title }}</h4>
+  </div>
+  <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <form #productForm="ngForm" (ngSubmit)="addProduct(productForm)">
+            <input type="hidden" name="id" id="id" #id="ngModel" [(ngModel)]="product.id_product" autocomplete="off">
+            <div class="form-group">
+                <label for="name">Nombre </label>  
+                <input ngbAutofocus type="text" name="name" id="name" class="form-control" #name="ngModel" [(ngModel)]="product.name" autocomplete="off" required>
+                <div *ngIf="name.invalid && (name.dirty || name.touched )"class="alert alert-danger">
+                  <div *ngIf="name.errors.required">
+                    Es requerido
+                   </div>
+               </div>             
+            </div>
+            <div *ngIf="!product.id_product" class="img-container new">
+              <div class="form-row">
+                <span *ngIf="imageList.size == 0" (click)="imageInput.click()">Añade imágenes a este producto.</span>
+                <div *ngFor="let image of imageList" class="col-2 relative-col">
+                  <div class="img-item" [ngStyle]="{'background-image':'url('+image[0]+')'}"></div>
+                  <button type="button" (click)="deleteFile(image)"><i class="fas fa-times"></i></button>
+                </div>
+                <div *ngIf="imageList.size > 0" class="col-2">
+                  <div class="img-item plus" (click)="imageInput.click()">
+                      <i class="fas fa-plus"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="product.id_product" class="img-container">
+              <div class="form-row">
+                <span *ngIf="product.Images.length == 0" (click)="imageInput.click()">Añade imágenes a este producto.</span>
+                <div *ngFor="let image of product.Images" class="col-2 relative-col">
+                  <div class="img-item" [ngStyle]="{'background-image':'url(http://localhost:4000/uploads/'+image.path+')'}"></div>
+                  <button type="button" (click)="deleteFile(image)"><i class="fas fa-times"></i></button>
+                </div>
+                <div *ngIf="product.Images.length > 0" class="col-2">
+                  <div class="img-item plus" (click)="imageInput.click()">
+                      <i class="fas fa-plus"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group" style="display:none;">
+                <input type="file" lang="es" #imageInput accept="image/*" (change)="onFilesAdded(imageInput)">
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="code">Codigo</label>  
+                  <input type="text" name="code" id="code" class="form-control" #code="ngModel" [(ngModel)]="product.code" autocomplete="off" required>
+                  <div *ngIf="name.invalid && (name.dirty || name.touched )"class="alert alert-danger">
+                  <div *ngIf="name.errors.required">
+                    Es requerido
+                   </div>
+               </div>                  
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="price">Precio</label> 
+                  <input type="text" name="price" id="price" class="form-control" #price="ngModel" [(ngModel)]="product.price" autocomplete="off" required>
+                  <div *ngIf="price.invalid && (price.dirty || price.touched )"class="alert alert-danger">
+                    <div *ngIf="price.errors.required">
+                      Es requerido
+                     </div>
+                  </div>                     
+                </div>
+              </div>
+            </div>              
+            <div class="form-row">                
+              <div class="col">
+                <div class="form-group">
+                  <label for="brand">Marca</label> 
+                  <input type="text" name="brand" id="brand" class="form-control" #brand="ngModel" [(ngModel)]="product.brand" autocomplete="off" required>
+                  <div *ngIf="brand.invalid && (brand.dirty || brand.touched )"class="alert alert-danger">
+                    <div *ngIf="brand.errors.required">
+                      Es requerido
+                     </div>
+                  </div>                    
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="company">Empresa</label> 
+                  <select name="company" id="company" #company="ngModel" [(ngModel)]="product.id_company" class="form-control" required>
+                    <option *ngFor="let company of companyService.companys " value="{{company.id_company}}">{{company.name}}</option>
+                  </select>
+                  <div *ngIf="company.invalid && (company.dirty || company.touched )"class="alert alert-danger">
+                    <div *ngIf="company.errors.required">
+                      Es requerido
+                     </div>
+                  </div>                   
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="category">Categoria</label>
+                  <select name="category" id="category" #category="ngModel" [(ngModel)]="product.id_category" class="form-control" required>
+                    <option *ngFor="let category of categoryService.categorys " value="{{category.id_category}}">{{category.name}}</option>
+                  </select>    
+                  <div *ngIf="company.invalid && (company.dirty || company.touched )"class="alert alert-danger">
+                    <div *ngIf="company.errors.required">
+                      Es requerido
+                     </div>
+                  </div>        
+                </div>
+              </div>
+            </div>
+            
+            
+            <div class="form-group">
+              <label for="tax">Impuesto</label>  
+              <select name="tax" id="tax" #tax="ngModel" [(ngModel)]="product.id_tax" class="form-control" required>
+                <option *ngFor="let tax of taxService.taxs " value="{{ tax.id_tax }}">{{tax.percentage}}</option>
+              </select> 
+              <div *ngIf="tax.invalid && (tax.dirty || tax.touched )"class="alert alert-danger">
+                <div *ngIf="tax.errors.required">
+                  Es requerido
+                 </div>
+              </div>                  
+            </div>
+            <div class="form-group">
+                <label  for="description">Descripcion</label> 
+                <textarea  name="description" id="description" class="form-control" #description="ngModel" [(ngModel)]="product.description" required ></textarea> 
+                <div *ngIf="description.invalid && (description.dirty || description.touched )"class="alert alert-danger">
+                  <div *ngIf="description.errors.required">
+                    Es requerido
+                   </div>
+                </div>           
+            </div>              
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-warning mr-2" (click)="modal.close()">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>        
+          </form>
+        </div>
+      </div>
+  </div>
+</ng-template>
+
+<ng-template #product_modal_stock let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ modal_title }}</h4>
+  </div>
+  <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <form #stockForm="ngForm" (ngSubmit)="addStock(stock, id)">
+            <div class="form-group">
+                <label for="stock">Cantidad </label>  
+                <input type="number" name="stock" id="stock" #stock class="form-control" autocomplete="off" required>        
+            </div>
+            <div class="form-group">
+              <label for="id">Producto</label> 
+              <select name="id" id="id" required class="form-control" #id>
+                <option *ngFor="let product of productService.products" value="{{product.id_product}}">{{product.name}}</option>
+              </select>                   
+            </div>           
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-warning mr-2" (click)="modal.close()">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>        
+          </form>
+        </div>
+      </div>
+  </div>
+</ng-template>
+

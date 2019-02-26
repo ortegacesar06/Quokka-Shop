@@ -1,0 +1,44 @@
+<div id="content-header" class="container-fluid">
+  <div class="row align-items-center">
+    <div class="col-4">
+      <h4 class="mb-0">Listado de Clientes</h4>
+    </div>
+    <div class="col-8 text-right">
+      
+    </div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="row">
+    
+    <table class="table">
+      <thead>
+        <th>Tipo DNI</th>
+        <th>DNI</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Fecha Nacimiento</th>
+        <th>Codigo Postal</th>
+        <th>Estado de la Cuenta</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let customer of registerPersonService.persons " >
+          <td>{{ customer.dni_type }}</td>
+          <td>{{ customer.dni }}</td>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ customer.birthdate }}</td>
+          <td>{{ customer.postal_code }}</td>
+          <td>{{ (customer.Account.state) ? 'Activa':'Inactiva' }}</td>
+          <td>
+            <a (click)="editState(customer.Account)" class="btn btn-warning">Estado</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

@@ -1,0 +1,83 @@
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <div class="card">
+        <div class="card-content">
+          <form #companyForm="ngForm" (ngSubmit)="addCompany(companyForm)">
+              <h2 class="text-center mb-5">Registro de empresa</h2>
+              <input type="hidden" name="id" id="id" #id="ngModel" [(ngModel)]="companyService.selectedCompany.id_company">
+              <div class="form-group">
+                  <label for="name">Nombre </label> 
+                  <input type="text" name="name" id="name" class="form-control" #name="ngModel" [(ngModel)]="companyService.selectedCompany.name"  placeholder="Nombre " required> 
+                  <div *ngIf="name.invalid && (name.dirty || name.touched )"
+                   class="alert alert-danger">
+                  <div *ngIf="name.errors.required">
+                    Es requerido
+                   </div>
+               </div>
+                                  
+              </div>
+              <div class="form-group">
+                  <label  for="country">País</label> 
+                  <select name="country" id="country" #country="ngModel" [(ngModel)]="companyService.selectedCompany.country" class="form-control" required>
+                    <option *ngFor="let country of companyService.countrys " value="{{country.name}}">{{country.name}}</option>
+                  </select>
+                  <div *ngIf="country.invalid && (country.dirty || country.touched )"
+                 class="alert alert-danger">
+                  <div *ngIf="country.errors.required">
+                    Es requerido
+                   </div>
+               </div>                  
+              </div>
+              <div class="form-group">
+                <label for="city">Ciudad</label>  
+                <input type="text" name="city" id="city" class="form-control" #city="ngModel" [(ngModel)]="companyService.selectedCompany.city"  placeholder="Ciudad" required> 
+                <div *ngIf="city.invalid && (city.dirty || city.touched )"
+                   class="alert alert-danger">
+                  <div *ngIf="city.errors.required">
+                    Es requerido
+                   </div>
+                </div>          
+              </div>
+              <div class="form-group">
+                <label for="address">Dirección</label> 
+                <input type="text" name="address" id="address" class="form-control" #address="ngModel" [(ngModel)]="companyService.selectedCompany.address"  placeholder="Direccion" required>                  
+                <div *ngIf="address.invalid && (address.dirty || address.touched )"
+                   class="alert alert-danger">
+                  <div *ngIf="address.errors.required">
+                    Es requerido
+                   </div>
+                </div>
+              </div>
+              <div class="form-group text-center">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>        
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--<div class="col-sm-7">
+      <table class="table">
+        <thead>
+          <th>Nombre</th>
+          <th>Pais</th>
+          <th>Ciudad</th>
+          <th>Direccion</th>
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor = " let company of companyService.companys" >
+            <td>{{ company.name }}</td>
+            <td>{{ company.country }}</td>
+            <td>{{ company.city }}</td>
+            <td>{{ company.address }}</td>
+            <td>
+              <a (click)="editCompany(company)" >Editar</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>-->
+  </div>
+</div>

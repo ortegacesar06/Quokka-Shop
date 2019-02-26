@@ -1,0 +1,20 @@
+<img src="../../assets/images/wordmark.png" alt="Quokka Shop" class="wordmark-sm">
+<div class="user-box">
+  <!--<img src="../../assets/images/user-img.png" alt="User Image">-->
+  <span class="name">{{ account.Person.first_name + '' + account.Person.last_name }} </span>
+  <span class="role">{{ (account.Person.id_role == 1) ? 'Administrador':'Supervisor' }}</span>
+</div>
+<nav>
+  <div class="divider">Menu</div>
+  <ul class="list-unstyled">
+    <li><a routerLink="./inventory" [routerLinkActive]="['active']"><i class="fas fa-boxes"></i>Inventario</a></li>
+    <li><a routerLink="./orders" [routerLinkActive]="['active']"><i class="fas fa-box"></i>Ordenes</a></li>
+    <li><a routerLink="./customers" [routerLinkActive]="['active']"><i class="fas fa-user-friends"></i>Clientes</a></li>
+    <!--<li><a routerLink="./shipping" [routerLinkActive]="['active']"><i class="fas fa-truck"></i>Envíos</a></li> -->
+  </ul>
+  <div class="divider">Preferencias</div>
+  <ul class="list-unstyled">
+    <li><a routerLink="./preferences" [routerLinkActive]="['active']"><i class="fas fa-cogs"></i>Configuración</a></li>
+    <li><a routerLink="./reports" [routerLinkActive]="['active']"><i class="fas fa-archive"></i>Informes</a></li>
+  </ul>
+</nav>

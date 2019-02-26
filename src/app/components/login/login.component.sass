@@ -1,0 +1,91 @@
+
+$red-color: #e24647
+$dark-red-color: #a5373d
+$light-gray-color: #e2e3eb
+$gray-color: #9091a2
+
+.header
+    padding: 30px 0
+
+.body
+    padding-top: 30px
+    padding-bottom: 70px
+
+.no-account
+    margin-right: 10px
+    color: $gray-color
+    font-size: 14px
+
+.label-login
+    position: absolute
+    top: -8px
+    left: 10px
+    font-size: 10px
+    background-color: $red-color
+    color: #fff
+    text-transform: uppercase
+    padding: 1px 5px
+    border-radius: 4px
+    opacity: 0
+
+.icon-login
+    position: absolute
+    top: 17px
+    left: 19px
+    color: $gray-color
+
+.form-control
+    height: auto
+    padding: 15px 15px 12px 50px
+    font-size: 14px
+
+.form-control:focus + .label-login
+    opacity: 1
+
+.form-group
+    margin-bottom: 20px
+
+.left
+    padding: 0 120px
+    h2
+        font-size: 24px
+        color: $red-color
+    .sub
+        font-size: 14px
+        margin-bottom: 30px
+        color: $gray-color
+    a
+        color: $gray-color
+        &:hover
+            color: $red-color
+    button
+        margin-top: 10px
+
+.login-social
+    .title
+        position: relative
+        color: $gray-color
+        padding: 20px 0
+        font-size: 14px
+        &:before
+            content: ''
+            position: absolute
+            left: 0
+            top: 31px
+            width: 28%
+            height: 1px
+            background-color: $light-gray-color
+        &:after
+            content: ''
+            position: absolute
+            right: 0
+            top: 31px
+            width: 28%
+            height: 1px
+            background-color: $light-gray-color
+    button
+        width: 100%
+
+.copyright
+    font-size: 12px
+    color: $gray-color

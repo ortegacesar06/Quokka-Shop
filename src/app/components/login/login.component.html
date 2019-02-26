@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row align-items-center header">
+    <div class="col-6">
+      <a href="#" class="wordmark">
+        <img src="../../../assets/images/wordmark.png" alt="Quokka Shop">
+      </a>
+    </div>
+    <div class="col-6 text-right">
+      <span class="no-account">¿No tienes una cuenta?</span>
+      <a routerLink="/register-person" class="btn btn-primary">¡Regístrate!</a>
+    </div>
+  </div>
+  <div class="row align-items-center body">
+    <div class="col-6 left">
+      <h2 class="text-center">Ingreso al Sistema</h2>
+      <p class="text-center sub">Lorem ipsum dolor sit amet, consectetur adipiscing elitamus pulvinar ex.</p>
+      <app-alert></app-alert>
+      <form #loginForm="ngForm" (ngSubmit)="login()">
+        <div class="form-group">
+          <input type="text" name="username" id="username" class="form-control" #username="ngModel" [(ngModel)]="account.username" autocomplete="off" placeholder="Usuario">          
+          <label class="label-login" for="username">Usuario</label>
+          <i class="fas fa-user-circle icon-login"></i>          
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" id="password" class="form-control" #password="ngModel" [(ngModel)]="account.password" placeholder="Contraseña">
+          <label class="label-login" for="password">Contraseña</label>        
+          <small class="form-text text-muted text-right"><a href="#">¿Olvidaste la contraseña?</a></small>  
+          <i class="fas fa-key icon-login"></i>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </div>        
+      </form>
+      <div class="login-social">
+        <div class="title text-center">O ingresa con</div>
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-facebook"><i class="fab fa-facebook-f"></i>Facebook</button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-google"><i class="fab fa-google-plus-g"></i>Google</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <img src="../../../assets/images/img_login01.png" alt="Quokka Shop">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+        <p class="copyright text-center">Quokka Shop 2019. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</div>

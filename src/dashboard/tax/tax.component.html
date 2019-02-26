@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="card">
+        <div class="card-content">
+          <form #taxForm="ngForm" (ngSubmit)="addTax(taxForm)">
+              <h2 class="text-center mb-4">Registro de Impuestos</h2>
+              <input type="hidden" name="id" id="id" #id="ngModel" [(ngModel)]="taxService.selectedTax.id_tax">
+              <div class="form-group">
+                  <label for="name">Porcentaje </label>  
+                  <input type="text"  name="percentage" id="percentage" class="form-control" #percentage="ngModel" [(ngModel)]="taxService.selectedTax.percentage"  placeholder="Ingrese un porcentaje " required >
+                  <div *ngIf="percentage.invalid && (percentage.dirty || percentage.touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="percentage.errors.required">
+                     El impuesto es requerido
+                   </div>
+               </div>
+              </div>
+              <div class="form-group">
+                  <label  for="country">Descripcion</label> 
+                  <textarea  name="description" id="description" class="form-control" #description="ngModel" [(ngModel)]="taxService.selectedTax.description" required  minlength="5"></textarea>        
+                  <div *ngIf="description.invalid && (description.dirty || description.touched )"
+                  minlength="10" class="alert alert-danger">
+                  <div *ngIf="description.errors.required">
+                    Es requerido
+                   </div>
+                   <div *ngIf="description.errors.minlength">
+                    Minimo 5
+                   </div>
+               </div>
+              </div>
+              <div class="form-group text-center">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>        
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <table class="table">
+        <thead>
+          <th>Porcentaje</th>
+          <th>Descripcion</th>
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor = " let tax of taxService.taxs" >
+            <td>{{ tax.percentage }}</td>
+            <td>{{ tax.description }}</td>
+            <td>
+              <a (click)="editTax(tax)" >Editar</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

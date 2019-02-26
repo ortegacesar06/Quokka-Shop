@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary mb-4" (click)="openModal(category_modal)">Añadir Categoría</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let category of categoryService.categorys">
+                        <td>{{category.name}}</td>
+                        <td>
+                            <a (click)="editCategory(category)" data-toggle="modal" data-target="#exampleModal" class="btn btn-warning">Editar
+                            </a>
+                        </td>
+                    </tr>
+        
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+  <ng-template #category_modal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{ modal_title }}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.close(categoryForm)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+            <div class="card-body">
+                <form #categoryForm="ngForm" (ngSubmit)="addCategory(categoryForm)">
+                    <div class="form-group">
+                        <label >Añadir Categoría</label>
+                        <input type="hidden" class="form-control" id="id" name="id"  #id="ngModel"
+                        [(ngModel)]="categoryService.selectedCategory.id_category">
+                        <input type="text" class="form-control" id="name" name="name"  #name="ngModel"
+                            minlength="4" [(ngModel)]="categoryService.selectedCategory.name" required>             
+                            <div *ngIf="name.invalid && (name.dirty || name.touched || name.pristine )"
+                            class="alert alert-danger">
+                            <div *ngIf="name.errors.required">
+                                Es requerido
+                                </div>
+                            <div *ngIf="name.errors.minlength">
+                                Minimo 4 letras
+                            </div>
+                            </div>                        
+                    </div>
+                    <button type="submit" class="btn btn-primary" >Guardar</button>
+                    <button type="button" class="btn btn-primary ml-3" (click)="modal.close(categoryForm)">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  </ng-template>

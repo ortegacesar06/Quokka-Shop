@@ -1,0 +1,17 @@
+<div id="content-header" class="container-fluid">
+  <div class="row align-items-center">
+    <div class="col-4">
+      <h4 class="mb-0">Inventario</h4>
+    </div>
+    <div class="col-8 text-right">
+      <ul class="list-inline submenu mb-0">
+        <li class="list-inline-item"><a routerLink="./product" [routerLinkActive]="['active']">Productos</a></li>
+        <li class="list-inline-item"><a routerLink="./category" [routerLinkActive]="['active']">Categorias</a></li>
+        <li class="list-inline-item"><a routerLink="./tax" [routerLinkActive]="['active']">Impuestos</a></li>
+        <!--<li class="list-inline-item"><a routerLink="./promotion" [routerLinkActive]="['active']">Promociones</a></li>-->
+      </ul>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

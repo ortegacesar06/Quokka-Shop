@@ -1,0 +1,199 @@
+<div class="header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-4">
+        <img src="../../../assets/images/wordmark.png" alt="Quokka Shop">
+      </div>
+      <div class="col-8 text-right">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a href="#" (click)="openCart(cart_modal, $event)"><i class="fas fa-shopping-bag"></i>Carrito {{ (isAuth) ? '(' + cartLength + ')' : '' }}</a>
+          </li>
+          <li class="list-inline-item">            
+            <div ngbDropdown placement="bottom-right" class="d-inline-block">
+              <a href id="btn_account" ngbDropdownToggle (click)="initSession($event)"><i class="fas fa-user"></i>{{ (isAuth) ? 'Mi cuenta':'Iniciar sesión' }}</a>
+              <div *ngIf="isAuth" ngbDropdownMenu aria-labelledby="btn_account">
+                <button class="dropdown-item">Pedidos</button>
+                <!--<button class="dropdown-item">Configuración</button>-->
+                <button class="dropdown-item" (click)="logout()">Cerrar Sesión</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="thumbs mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <div class="big-box" [ngStyle]="{'background-image':'url(/assets/images/thumb-01.png)'}">
+          <div class="content-box">
+            <h3>Accesorios</h3>
+            <h5>Mauris sed massa quis felis ullamcorper vehicula a sed tellus. Mauris quis sollicitudin mi, lobortis egestas massa.</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="small-box" [ngStyle]="{'background-image':'url(/assets/images/thumb-02.png)'}">
+          <div class="content-box">
+            <h3>Vestimenta</h3>
+            <h5>Mauris sed massa quis felis ullamcorper vehicula a sed tellus. Mauris quis sollicitudin mi, lobortis egestas massa.</h5>
+          </div>
+        </div>
+        <div class="small-box" [ngStyle]="{'background-image':'url(/assets/images/thumb-03.png)'}">
+          <div class="content-box">
+            <h3>Tecnología</h3>
+            <h5>Mauris sed massa quis felis ullamcorper vehicula a sed tellus. Mauris quis sollicitudin mi, lobortis egestas massa.</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="featured mb-4">
+  <div class="container">
+    <div class="row justify-content-center header-section">
+      <div class="col-7 text-center">
+        <h2>Productos Destacados</h2>
+        <p class="mb-5">Mauris quis sollicitudin mi, lobortis egestas massa. Curabitur bibendum sapien ultricies lorem porttitor eget lacinia nibh ullamcorper.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let product of productService.featured" class="col-3">
+        <div class="featured-item">
+          <div class="img-item" [ngStyle]="{'background-image':'url(http://localhost:4000/uploads/'+ product.Images[0].path +')'}">
+            <span class="price">${{ product.price }}</span>
+            <div class="button-item">
+                <button type="button" class="btn btn-primary" (click)="addToCart(product.external_id)">Añadir al carrito</button>    
+            </div>  
+          </div>
+          <div class="content-item text-center">
+            <h6>{{ product.name }}</h6>
+            <p>{{ product.description | slice: 0:55 }}...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="products mb-5">
+  <div class="container">
+      <div class="row justify-content-center header-section">
+        <div class="col-7 text-center">
+          <h2>Productos</h2>
+          <p class="mb-5">Mauris quis sollicitudin mi, lobortis egestas massa. Curabitur bibendum sapien ultricies lorem porttitor eget lacinia nibh ullamcorper.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="misc-box">
+            <h6>Todas las Categorías</h6>
+            <ul class="list-unstyled">
+              <li *ngFor="let category of categoryService.categorys"><button class="btn btn-link"><i class="fas fa-asterisk"></i>{{ category.name }}</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="row">
+            <div *ngFor="let product of productService.products" class="col-6">
+              <div class="product-item">
+                  <div class="img-item" [ngStyle]="{'background-image':'url(http://localhost:4000/uploads/'+ product.Images[0].path +')'}"></div>
+                <div class="content-item">                  
+                  <span class="price">${{ product.price }}</span>
+                  <h6>{{ product.name }}</h6>
+                  <p>{{ product.description | slice: 0:55 }}...</p>
+                  <button type="button" class="btn btn-primary" (click)="addToCart(product.external_id)">Añadir al carrito</button>
+                </div>
+              </div>
+            </div>
+            <!--<div class="col-12">
+              <nav>
+                <ul class="pagination justify-content-center">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>-->
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<ng-template #cart_modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Carrito</h4>
+  </div>
+  <div class="modal-body">
+    <div class="content-cart">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Cantidad</th>
+            <th>P. Unitario</th>
+            <th>P. Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of this.cartService.cart">
+            <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
+            <td><a href class="btn btn-danger" (click)="minusItem(item.external, $event)"><i class="fas fa-minus"></i></a> {{ item.cant }} <a href class="btn btn-success" (click)="plusItem(item.external, $event)"><i class="fas fa-plus"></i></a></td>
+            <td>${{ item.pu | number: '1.2-2' }}</td>
+            <td>${{ item.pt | number: '1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="totals text-right">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Subtotal:</td>
+            <td>{{ totalCart | number: '1.2-2' }}</td>
+          </tr>
+          <tr>
+            <td>IVA:</td>
+            <td>{{ taxCart | number: '1.2-2' }}</td>
+          </tr>
+          <tr>
+            <td>Total:</td>
+            <td>{{ totalCart + taxCart | number: '1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-right">
+      <button type="button" class="btn btn-warning mr-2" (click)="modal.close()">Cerrar</button>
+      <a href="/payment" class="btn btn-primary">Completar Compra</a>
+    </div>
+  </div>
+</ng-template>
+<footer>
+  <div class="container">
+    <div class="row"> 
+      <div class="col text-center">
+        <img src="/assets/images/wordmark.png" class="mb-4" alt="Quokka Shop">
+        <p class="mb-0">(+395) 0999999999 / 0888888888</p>
+        <p class="mb-0">contact@quokkashop.com</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+        <p class="copy mb-0">Quokka Shop 2019. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<app-alerts></app-alerts>

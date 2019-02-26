@@ -1,0 +1,141 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="card">
+        <div class="card-content">
+          <form #personForm="ngForm" (ngSubmit)="addRegisterPerson(personForm)" >
+            <h2 class="text-center">Registro</h2>
+            <h4 class="text-left">Datos Personales</h4>
+            <input type="hidden" name="id_person" id="id_person" #id_person="ngModel" [(ngModel)]="registerPersonService.selectedRegisterPerson.id_person">
+            <input type="hidden" name="id_role" id="id_role" #id_role="ngModel"  [(ngModel)]="registerPersonService.selectedRegisterPerson.id_role">
+            <div class="form-group">
+              <label for="dni_type">Tipo de Identificacion </label>
+              <select name="dni_type" id="dni_type" #dni_type="ngModel" [(ngModel)]="registerPersonService.selectedRegisterPerson.dni_type" class="form-control" required>
+                <option value="Cédula de Identidad">Cédula de Identidad</option>
+                <option value="RUC">RUC</option>
+              </select>
+              <div *ngIf="dni_type.invalid && (dni_type.dirty || dni_type.touched )"
+                   class="alert alert-danger">
+                  <div *ngIf="dni_type.errors.required">
+                    Campo requerido
+                   </div>
+            </div>
+            </div>
+            <div class="form-group">
+              <label for="dni">Identificacion</label>
+              <input type="text" min="0" maxlength="10" pattern="[0-9 ]*"  name="dni" id="dni" class="form-control" #dni="ngModel" [(ngModel)]="registerPersonService.selectedRegisterPerson.dni" placeholder="Ingrese su identifiacion" required >
+              <div *ngIf="dni.invalid && (dni.dirty || dni.touched )"
+              class="alert alert-danger">
+             <div *ngIf="dni.errors.required">
+              Campo requerido
+              </div>
+              <div *ngIf="dni.errors.pattern">
+                Solo 10 numeros
+               </div>
+       </div>
+            </div>
+            <div class="form-group">
+              <label for="first_name">Nombres</label>
+              <input type="text" name="first_name" id="first_name" #first_name="ngModel" [(ngModel)]="registerPersonService.selectedRegisterPerson.first_name" class="form-control" placeholder="Ingrese sus nombres" required>
+              <div *ngIf="first_name.invalid && (first_name.dirty || first_name.touched )"
+              class="alert alert-danger">
+             <div *ngIf="first_name.errors.required">
+              Campo requerido
+              </div>
+       </div>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Apellidos</label>
+                <input type="text" name="last_name" id="last_name" #last_name="ngModel" [(ngModel)]="registerPersonService.selectedRegisterPerson.last_name" class="form-control" placeholder="Ingrese sus apellidos" required>
+                <div *ngIf="last_name.invalid && (last_name.dirty || last_name.touched )"
+                class="alert alert-danger">
+               <div *ngIf="last_name.errors.required">
+                Campo requerido
+                </div>
+         </div>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Fecha de Nacimiento</label>
+                <input type="date" class="form-control" name="birthdate" id="birthdate" #birthdate="ngModel" [(ngModel)]="registerPersonService.selectedRegisterPerson.birthdate" aria-describedby="fechaHelp" placeholder="Ingrese su fecha de Nacimiento" required>
+                <div *ngIf="birthdate.invalid && (birthdate.dirty || birthdate.touched )"
+                class="alert alert-danger">
+               <div *ngIf="birthdate.errors.required">
+                Campo requerido
+                </div>
+         </div>
+            </div>
+            <div class="form-group">
+              <label for="postal_code">Codigo postal</label>
+              <input name="postal_code" id="postal_code" #postal_code="ngModel" [(ngModel)]="registerPersonService.selectedRegisterPerson.postal_code" class="form-control" placeholder="Ingrese el codigo postal" required  type="text" min="0" maxlength="8" pattern="[0-9 ]*">
+              <div *ngIf="postal_code.invalid && (postal_code.dirty || postal_code.touched )"
+                class="alert alert-danger">
+               <div *ngIf="postal_code.errors.required">
+                Campo requerido
+                </div>
+                <div *ngIf="postal_code.errors.pattern">
+                  solo numeros
+                 </div>
+         </div>
+            </div>
+            <br>
+            <h4 class="text-left">Datos de la Cuenta</h4>
+            <input type="hidden" name="id_account" id="id_account" #id_account="ngModel" [(ngModel)]="registerPersonService.selectedAccount.id_account">
+            <div class="form-group">
+              <label for="user_name">Nombre de Usuario</label>
+              <input type="text" name="user_name" id="user_name" #user_name="ngModel" [(ngModel)]="registerPersonService.selectedAccount.user_name" class="form-control" placeholder="Ingrese el nombre de usuario" required>
+              <div *ngIf="user_name.invalid && (user_name.dirty || user_name.touched )"
+              class="alert alert-danger">
+             <div *ngIf="user_name.errors.required">
+              Campo requerido
+              </div>
+       </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" email #email="ngModel" [(ngModel)]="registerPersonService.selectedAccount.email" class="form-control" placeholder="Ingrese su email" required  pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$">
+              <div *ngIf="email.invalid && (email.dirty || email.touched )"
+              class="alert alert-danger">
+             <div *ngIf="email.errors.required">
+               Campo requerido
+              </div>
+               <div *ngIf="email.errors.pattern">
+                Email mal escrito
+               </div>
+       </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Contraseña</label>
+              <input type="password" name="password" id="password" #password="ngModel" [(ngModel)]="registerPersonService.selectedAccount.password" class="form-control" placeholder="Ingrese su contraseña" required  pattern="^[a-zA-Z0-9]+$">
+              <div *ngIf="password.invalid && (password.dirty || password.touched )"
+              class="alert alert-danger">
+             <div *ngIf="password.errors.required">
+              Campo requerido
+              </div>
+              <div *ngIf="password.errors.pattern">
+                La contraseña no debe tener espcacios en blanco
+                 
+                </div>
+       </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone_number">Numero Tel/Cel</label>
+              <input type="text" min="0" maxlength="10" pattern="[0-9 ]*" name="phone_number" id="phone_number" #phone_number="ngModel" [(ngModel)]="registerPersonService.selectedAccount.phone_number" class="form-control" placeholder="Ingrese su numero de telefono/celular" required>
+              <div *ngIf="phone_number.invalid && (phone_number.dirty || phone_number.touched )"
+              class="alert alert-danger">
+             <div *ngIf="phone_number.errors.required">
+              Campo requerido
+              </div>
+              <div *ngIf="phone_number.errors.pattern">
+                solo numeros
+                </div>
+       </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+
+        </div>  
+      </div>    
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div id="content-header" class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-4">
+        <h4 class="mb-0">Listado de Órdenes</h4>
+      </div>
+      <div class="col-8 text-right">
+        
+      </div>
+    </div>
+  </div>
+<div class="container">
+
+  <div class="row">
+    
+    <table class="table">
+      <thead>
+        <th>Cliente</th>
+        <th>Impuesto</th>
+        <th>Total</th>
+        <th>Estado</th>
+       
+      </thead>
+      <tbody>
+        <tr *ngFor = "let order of ordersService.orders " >
+          <td>{{ order.Person.first_name +' '+ order.Person.last_name }}</td>
+          <td>{{ order.tax }}</td>
+          <td>{{ order.total }}</td>
+          <td>{{ (order.state) ? 'Activa':'Cancelada' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+

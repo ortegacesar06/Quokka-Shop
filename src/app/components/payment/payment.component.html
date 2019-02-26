@@ -1,0 +1,160 @@
+<div class="header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-4">
+        <img src="../../../assets/images/wordmark.png" alt="Quokka Shop">
+      </div>
+      <div class="col-8 text-right">
+        <ul class="list-inline">
+          <li class="list-inline-item">            
+            <div ngbDropdown placement="bottom-right" class="d-inline-block">
+              <a href id="btn_account" ngbDropdownToggle (click)="initSession($event)"><i class="fas fa-user"></i>{{ (isAuth) ? 'Mi cuenta':'Iniciar sesión' }}</a>
+              <div *ngIf="isAuth" ngbDropdownMenu aria-labelledby="btn_account">
+                <button class="dropdown-item">Pedidos</button>
+                <!--<button class="dropdown-item">Configuración</button>-->
+                <button class="dropdown-item" (click)="logout()">Cerrar Sesión</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="payment-content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-7">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Cantidad</th>
+              <th>P. Unitario</th>
+              <th>P. Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of this.cartService.cart">
+              <td>{{ item.name }}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.cant }}</td>
+              <td>${{ item.pu | number: '1.2' }}</td>
+              <td>${{ item.pt | number: '1.2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="totals text-right mb-5">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>Subtotal:</td>
+                <td>{{ totalCart | number: '1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td>IVA:</td>
+                <td>{{ taxCart | number: '1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td>Total:</td>
+                <td>{{ totalCart + taxCart | number: '1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <div class="shipping-wrap">
+          <div class="custom-control custom-checkbox">
+            <input (click)="toggleShip(checkbox)" #checkbox type="checkbox" class="custom-control-input" id="customCheck1">
+            <label class="custom-control-label" for="customCheck1">Envío</label>
+          </div>
+    
+          <div *ngIf="hasShip" class="ship-content mt-4">
+            <form action=""> 
+              <div class="form-row">
+                <div class="col">
+                  <div class="form-group">
+                      <label for="">Cliente</label>
+                      <input type="text" class="form-control" placeholder="" value="{{ account.Person.first_name +' '+ account.Person.last_name }}" readonly>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                      <label for="">Identificación</label>
+                      <input type="text" class="form-control" placeholder="" value="{{ account.Person.dni }}" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Nro. Telefono</label>
+                    <input type="text" class="form-control" placeholder="" value="{{ account.phone_number }}" readonly>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="">Ciudad</label>
+                    <select name="" id="" class="form-control" #city="ngModel" [(ngModel)]="shipping.city" [ngModelOptions]="{standalone: true}">
+                      <option value="" selected disabled>Seleccionar la cuidad</option>
+                      <option value="Loja">Loja</option>
+                      <option value="Santo Domingo">Santo Domingo</option>
+                      <option value="Quito">Quito</option>
+                    </select>
+                  </div>
+                </div>
+              </div>       
+              
+              <div class="form-group">
+                <label for="">Dirección de Envío</label>
+                <textarea #address="ngModel" [(ngModel)]="shipping.address" [ngModelOptions]="{standalone: true}" class="form-control" name="" id="" cols="30" rows="5"></textarea>
+              </div>
+            </form>
+          </div> 
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="payment-wrap">
+          <div class="form-group">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input (change)="tooglePayment(radio1)" #radio1 id="radio_1" type="radio" name="payment_type" class="custom-control-input" value="card" checked>
+              <label class="custom-control-label" for="radio_1">Tarjeta de Crédito</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input (change)="tooglePayment(radio2)" #radio2 id="radio_2" type="radio" name="payment_type" class="custom-control-input" value="deposit">
+              <label class="custom-control-label" for="radio_2">Depósito Bancario</label>
+            </div>
+          </div>
+          <form *ngIf="isCard" novalidate (ngSubmit)="buy()" [formGroup]="stripeForm">
+            <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+            <button type="submit" class="btn btn-primary mt-4">
+              {{ (!isLoading) ? 'Procesar Compra':'Procesando...' }}
+            </button>
+            <a routerLink="/" class="btn btn-warning ml-3 mt-4">Regresar a la tienda</a>
+          </form>
+          <form *ngIf="!isCard" (ngSubmit)="buy()">
+              <button type="submit" class="btn btn-primary mt-4">
+                  {{ (!isLoading) ? 'Procesar Compra':'Procesando...' }}
+              </button>
+              <a routerLink="/" class="btn btn-warning ml-3 mt-4">Regresar a la tienda</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="container">
+    <div class="row"> 
+      <div class="col text-center">
+        <img src="/assets/images/wordmark.png" class="mb-4" alt="Quokka Shop">
+        <p class="mb-0">(+395) 0999999999 / 0888888888</p>
+        <p class="mb-0">contact@quokkashop.com</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+        <p class="copy mb-0">Quokka Shop 2019. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<app-alerts></app-alerts>

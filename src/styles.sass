@@ -1,0 +1,77 @@
+@import './assets/styles/nunito'
+
+$red-color: #e24647
+$dark-red-color: #a5373d
+$light-gray-color: #e2e3eb
+
+body
+    font-family: 'Nunito', sans-serif
+
+
+a
+    text-decoration: none
+    &:hover, &:focus, &:active, &:visited
+        text-decoration: none
+.btn
+    font-size: 14px
+button
+    border: none
+    box-shadow: none
+.btn-primary
+    background-color: $red-color
+    border-color: $red-color
+    padding-left: 20px
+    padding-right: 20px    
+    &:hover
+        background-color: $dark-red-color
+        border-color: $dark-red-color
+    &:active
+        box-shadow: none !important
+        background-color: $dark-red-color !important
+        border-color: $dark-red-color !important
+    &:focus
+        background-color: $red-color
+        border-color: $red-color
+        box-shadow: none !important
+.btn-facebook
+    background-color: #395692
+    color: #fff !important
+    display: block
+    i
+        margin-right: 10px
+
+.btn-google
+    background-color: #dc4a3d
+    color: #fff !important
+    display: block
+    i
+        margin-right: 10px
+
+.form-group
+    position: relative
+
+.form-control
+    border-color: $light-gray-color
+    &:focus
+        box-shadow: none
+        border-color: $red-color
+
+.modal-header
+    border: none
+    padding: 15px 20px 0
+    h4
+        font-weight: 900
+        text-transform: uppercase
+        font-size: 18px
+        color: #3f3f3f
+        
+.alertsContainer
+    position: fixed !important
+    .iconpanel
+        height: auto !important
+        padding: 12px !important
+    .messagepanel
+        height: auto !important
+    .closeicon
+        top: 19px !important
+        right: 15px !important
